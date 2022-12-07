@@ -4,7 +4,6 @@ import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.TaskDTO;
 import com.cydeo.dto.UserDTO;
 import com.cydeo.entity.User;
-import com.cydeo.exception.TicketingProjectException;
 import com.cydeo.mapper.UserMapper;
 import com.cydeo.repository.UserRepository;
 import com.cydeo.service.KeycloakService;
@@ -82,7 +81,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(String username) throws TicketingProjectException {
+    public void delete(String username) {
 
         User user = userRepository.findByUserNameAndIsDeleted(username, false);
 
@@ -90,8 +89,6 @@ public class UserServiceImpl implements UserService {
             user.setIsDeleted(true);
             user.setUserName(user.getUserName() + "-" + user.getId());  // harold@manager.com-2
             userRepository.save(user);
-        }else{
-            throw new TicketingProjectException("User can not be deleted");
         }
 
     }
